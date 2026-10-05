@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/"
+title = "WHERE"
+description = "A simple local-first mobile app that helps people remember where they put physical objects, with quick text or voice capture, photos, and natural-language search."
+version = "1.0.0"
+id = "artifacts/where"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/" ]
+localPort = 23982
+
+[services.development]
+run = "pnpm --filter @workspace/where run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/where", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/where", "run", "serve" ]
+
+[services.env]
+PORT = "23982"
+BASE_PATH = "/"

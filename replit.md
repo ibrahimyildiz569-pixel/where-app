@@ -1,44 +1,44 @@
-# [Project name]
+# WHERE
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+WHERE is an iPhone-first Expo app for remembering where physical objects were put. It saves object names, locations, notes, dates, and optional photos locally on the device.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- Run the managed `artifacts/where: expo` workflow to preview the mobile app or scan its QR code with Expo Go.
+- `pnpm --filter @workspace/where run typecheck` — check the mobile app's TypeScript.
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- The mobile app does not require the API server or a database.
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- React Native, Expo, Expo Router, and TypeScript
+- AsyncStorage for on-device saved items
+- Expo Image Picker for camera capture
+- pnpm workspaces, Node.js 24
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/where/app/` — home, capture/edit, search, and item detail screens
+- `artifacts/where/contexts/ItemsContext.tsx` — local saved-item storage and CRUD
+- `artifacts/where/lib/item-utils.ts` — sentence parsing, search, and date formatting
+- `artifacts/where/constants/colors.ts` — app palette
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Keep the first version local-first: no login, cloud sync, subscriptions, or backend dependency.
+- Use the phone keyboard's built-in dictation for spoken TELL and FIND input; avoid an added speech service or microphone permission.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+TELL saves an item and its location from a sentence. SNAP captures a photo and prompts for the item and place. FIND searches saved items and returns the most recently saved location. Users can review, edit, and delete records.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Keep the design simple and modern, optimize for iPhone first, and preserve Android compatibility.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Photos are stored as local device URIs alongside AsyncStorage records.
 
 ## Pointers
 
